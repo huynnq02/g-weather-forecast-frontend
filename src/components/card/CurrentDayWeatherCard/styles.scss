@@ -4,11 +4,16 @@
     display: flex;
     flex-direction: row;
     background-color: $cornflowerBlue;
-    padding: 20px;
     border-radius: 5px;
     color: white;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 55%;
-
+    height: 30%;
+    padding: 20px 50px 20px 25px;
+}
+.weather-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
 }
 

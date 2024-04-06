@@ -7,7 +7,7 @@ function FutureDayWeatherCard({
   wind,
   humidity,
   text,
-  weatherIconUrl,
+  icon,
 }) {
   if (!city || !date || !temperature || !wind || !humidity) {
     return null;
@@ -17,7 +17,7 @@ function FutureDayWeatherCard({
     <div className="future-weather-card">
       <div className="weather-info">
         <h2>({date})</h2>
-        <img className="icon-weather" src={weatherIconUrl} alt={text} />
+        <img className="icon-weather" src={icon} alt={text} />
         <p>Temp: {temperature}°C</p>
         <p>Wind: {wind} M/S</p>
         <p>Humidity: {humidity}%</p>

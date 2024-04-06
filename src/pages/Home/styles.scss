@@ -1,7 +1,10 @@
 @import '../../assets/colors.scss';
 .home-dashboard {
     background-color: $paleBlue;
+    height: 1000vh;
+    width: 100vw;
 }
+
 .home-body {
     margin-top: 2%;
     margin-left: 1.5%;
@@ -9,4 +12,16 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.form-container {
+    flex: 1;
+}
+
+.weather-container {
+    flex: 2;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

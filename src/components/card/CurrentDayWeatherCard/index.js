@@ -7,7 +7,7 @@ function CurrentDayWeatherCard({
   wind,
   humidity,
   text,
-  weatherIconUrl,
+  icon,
 }) {
   if (!city || !date || !temperature || !wind || !humidity) {
     return null;
@@ -24,7 +24,14 @@ function CurrentDayWeatherCard({
         <p>Humidity: {humidity}%</p>
       </div>
       <div className="weather-icon">
-        <img src={weatherIconUrl} alt={text} />
+        <img
+          src={icon}
+          alt={text}
+          style={{
+            width: "80px",
+            height: "80px",
+          }}
+        />
         <p>{text}</p>
       </div>
     </div>

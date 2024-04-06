@@ -10,8 +10,6 @@ function SearchForm() {
   const [cityName, setCityName] = useState("");
   const loading = useSelector((state) => state.weather.loading);
   const dispatch = useDispatch();
-  const baseUrl =
-    process.env.REACT_APP_BASE_URL || "https://g-weather-forecast.onrender.com";
 
   const handleInputChange = (event) => {
     setCityName(event.target.value);
@@ -19,10 +17,10 @@ function SearchForm() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(baseUrl);
-    console.log("Search for city:", cityName);
-    console.log("Loading:", loading);
-
+    if (!cityName.trim()) {
+      alert("Please enter a city name.");
+      return;
+    }
     dispatch(fetchWeather(cityName));
   };
 
@@ -48,17 +46,17 @@ function SearchForm() {
           label="Search"
           color={colors.cornflowerBlue}
           height="50px"
-          width="250px"
+          width="370px"
           onClick={handleFormSubmit}
         />
       </div>
-      <TextLine text="or" />
+      {/* <TextLine text="or" /> */}
       <div className="form-row">
         <Button
           label="Use Current Location"
           color={colors.slateGrey}
           height="50px"
-          width="250px"
+          width="370px"
         />
       </div>
       {loading && <div>Loading...</div>}

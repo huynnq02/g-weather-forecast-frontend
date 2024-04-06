@@ -5,7 +5,7 @@ import CurrentDayWeatherCard from "../../components/card/CurrentDayWeatherCard";
 import SearchForm from "../../components/form/SearchForm";
 import { useSelector } from "react-redux";
 import formatDate from "../../utils/formatDate";
-import FutureDayWeatherCard from "../../components/card/FutureDayWeatherCard";
+import FutureWeatherList from "../../components/card/ListCard";
 
 function Home() {
   const weatherData = useSelector(
@@ -15,21 +15,13 @@ function Home() {
     (state) => state.weather?.data?.data?.location?.name
   );
   const futureData = useSelector(
-    (state) => state.weather?.data?.data.forecast?.forecastday[0]
+    (state) => state.weather?.data?.data.forecast?.forecastday
   );
   const [data, setData] = useState({});
   const [listData, setListData] = useState({});
 
   useEffect(() => {
     if (weatherData && futureData) {
-      // console.log("Weather Data:", weatherData);
-      // console.log("location:", location);
-      console.log(
-        "Future:",
-
-        futureData
-      );
-
       const formattedData = {
         city: location,
         date: formatDate(weatherData?.last_updated),
@@ -39,18 +31,17 @@ function Home() {
         text: weatherData?.condition?.text,
         icon: weatherData?.condition?.icon,
       };
-      const formattedListData = {
+      const tempList = futureData.map((element) => ({
         city: location,
-        date: futureData?.date,
-        temperature: futureData?.day?.avgtemp_c,
-        wind: futureData?.day?.maxwind_kph,
-        humidity: futureData?.day?.avghumidity,
-        text: futureData?.day?.condition?.text,
-        icon: futureData?.day?.condition?.icon,
-      };
+        date: element?.date,
+        temperature: element?.day?.avgtemp_c,
+        wind: element?.day?.maxwind_kph,
+        humidity: element?.day?.avghumidity,
+        text: element?.day?.condition?.text,
+        icon: element?.day?.condition?.icon,
+      }));
       setData(formattedData);
-      setListData(formattedListData);
-      console.log(formattedListData);
+      setListData(tempList);
     }
   }, [weatherData, location, futureData]);
 
@@ -58,10 +49,14 @@ function Home() {
     <div className="home-dashboard">
       <HomeHeader />
       <div className="home-body">
-        <SearchForm />
-        <CurrentDayWeatherCard {...data} />
+        <div className="form-container">
+          <SearchForm />
+        </div>
+        <div className="weather-container">
+          <CurrentDayWeatherCard {...data} />
+          <FutureWeatherList weatherData={listData} />
+        </div>
       </div>
-      <FutureDayWeatherCard {...listData} />
     </div>
   );
 }
