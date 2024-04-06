@@ -1,0 +1,7 @@
+const colors = {
+  cornflowerBlue: "#5372f0",
+  paleBlue: "#e3f2fd",
+  white: "#ffffff",
+  slateGrey: "#6c757d",
+};
+export default colors;

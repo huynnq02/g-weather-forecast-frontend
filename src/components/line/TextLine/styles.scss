@@ -1,0 +1,9 @@
+.line {
+    min-width: 50px;
+    /* Set minimum width for lines */
+    border-top: 1px solid #000;
+}
+.text-line {
+    display: flex;
+    flex-direction: row;
+}

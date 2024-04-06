@@ -1,0 +1,19 @@
+@import '../../../assets/colors.scss';
+
+.future-weather-card {
+    display: flex;
+    flex-direction: row;
+    background-color: $slateGrey;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    width: 15%;
+
+}
+.weather-info h2 {
+    font-size: 18px;
+}
+.icon-weather {
+    width:30px;
+    height:30px
+}
