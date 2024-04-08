@@ -6,7 +6,7 @@ import SearchForm from "../../components/form/SearchForm";
 import { useSelector } from "react-redux";
 import formatDate from "../../utils/formatDate";
 import FutureWeatherList from "../../components/card/ListCard";
-
+import SearchHistory from "../../components/list/SearchHistory";
 function Home() {
   const weatherData = useSelector(
     (state) => state.weather?.data?.data?.current
@@ -17,11 +17,13 @@ function Home() {
   const futureData = useSelector(
     (state) => state.weather?.data?.data.forecast?.forecastday
   );
+  const history = useSelector((state) => state.weather?.history);
+
   const [data, setData] = useState({});
   const [listData, setListData] = useState({});
 
   useEffect(() => {
-    if (weatherData && futureData) {
+    if (weatherData && futureData && history) {
       const formattedData = {
         city: location,
         date: formatDate(weatherData?.last_updated),
@@ -42,8 +44,9 @@ function Home() {
       }));
       setData(formattedData);
       setListData(tempList);
+      console.log(history);
     }
-  }, [weatherData, location, futureData]);
+  }, [weatherData, location, futureData, history]);
 
   return (
     <div className="home-dashboard">
@@ -51,6 +54,7 @@ function Home() {
       <div className="home-body">
         <div className="form-container">
           <SearchForm />
+          <SearchHistory history={history} />
         </div>
         <div className="weather-container">
           <CurrentDayWeatherCard {...data} />
