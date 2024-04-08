@@ -5,7 +5,7 @@ function FutureWeatherList({ weatherData }) {
   const [showAll, setShowAll] = useState(false);
 
   const handleClick = () => {
-    setShowAll(true);
+    setShowAll(!showAll);
   };
 
   if (!weatherData || !Array.isArray(weatherData) || weatherData.length === 0) {
@@ -20,7 +20,7 @@ function FutureWeatherList({ weatherData }) {
   return (
     <div>
       <label htmlFor="cityInput" className="label-text">
-        4 - Day Forecast
+        {showAll ? `${weatherData.length} - Day Forecast` : `4 - Day Forecast`}
       </label>
       <div className="future-weather-list">
         {itemsToDisplay.map((dayData, index) => (
@@ -35,9 +35,13 @@ function FutureWeatherList({ weatherData }) {
             icon={dayData.icon}
           />
         ))}
-        {!showAll && (
+        {!showAll ? (
           <button onClick={handleClick} className="more-button">
             More
+          </button>
+        ) : (
+          <button onClick={handleClick} className="more-button">
+            Less
           </button>
         )}
       </div>

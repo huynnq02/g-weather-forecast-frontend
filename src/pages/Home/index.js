@@ -8,6 +8,34 @@ import formatDate from "../../utils/formatDate";
 import FutureWeatherList from "../../components/card/ListCard";
 import SearchHistory from "../../components/list/SearchHistory";
 import ClearHistoryButton from "../../components/button/ClearHistoryButton";
+
+const subscribeToWeatherUpdates = async (email, location) => {
+  try {
+    const response = await fetch(
+      "https://g-weather-forecast.onrender.com/api/v1/subscription/send-email",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          location,
+        }),
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      return true;
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    console.error("Error subscribing to weather updates:", error);
+    return false;
+  }
+};
+
 function Home() {
   const weatherData = useSelector(
     (state) => state.weather?.data?.data?.current
@@ -22,12 +50,35 @@ function Home() {
 
   const [data, setData] = useState({});
   const [listData, setListData] = useState({});
+  const [showSubscriptionPopup, setShowSubscriptionPopup] = useState(false);
+  const [email, setEmail] = useState("");
+  const [subscriptionLocation, setSubscriptionLocation] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleHistoryCardClick = (selectedHistory) => {
     setData(selectedHistory.currentWeather);
     setListData(selectedHistory.futureWeather);
   };
-  
+
+  const handleSubscription = async () => {
+    setLoading(true);
+
+    const success = await subscribeToWeatherUpdates(
+      email,
+      subscriptionLocation
+    );
+    setLoading(false);
+
+    if (success) {
+      alert(
+        "We've sent you an email confirmation. Click the link in the email to confirm."
+      );
+      setShowSubscriptionPopup(false);
+    } else {
+      alert("Subscription failed. Please try again later.");
+    }
+  };
+
   useEffect(() => {
     if (weatherData && futureData && history) {
       const formattedData = {
@@ -60,6 +111,33 @@ function Home() {
       <div className="home-body">
         <div className="form-container">
           <SearchForm />
+          <div className="subscription-text">
+            <button
+              onClick={() => setShowSubscriptionPopup(true)}
+              className="text-button"
+            >
+              Want to receive updates of weather every day? Click here
+            </button>
+          </div>
+          {showSubscriptionPopup && (
+            <div className="subscription-popup">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Enter your location"
+                value={subscriptionLocation}
+                onChange={(e) => setSubscriptionLocation(e.target.value)}
+              />
+              <button onClick={handleSubscription}>
+                {loading ? "Subscribing..." : "Subscribe"}
+              </button>
+            </div>
+          )}
           {history.length > 0 && <ClearHistoryButton />}
           <SearchHistory
             history={history}
