@@ -4,12 +4,14 @@ import HistoryCard from "../../card/HistoryCard";
 import "./styles.scss";
 
 function SearchHistory({ history, onHistoryCardClick }) {
+  const reversedHistory = [...history].reverse();
+
   return (
     <div className="history-container">
       <h2>Search History</h2>
-      {history.length === 0 && <p>No search history available.</p>}
-      {history.length > 0 && <p>Click a card to view weather info.</p>}
-      {history.map((entry, index) => (
+      {reversedHistory.length === 0 && <p>No search history available.</p>}
+      {reversedHistory.length > 0 && <p>Click a card to view weather info.</p>}
+      {reversedHistory.map((entry, index) => (
         <HistoryCard
           key={index}
           location={entry.currentWeather.city}
