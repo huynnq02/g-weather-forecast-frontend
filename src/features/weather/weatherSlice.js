@@ -31,13 +31,18 @@ export const weatherSlice = createSlice({
     },
     updateHistory: (state, action) => {
       const { currentWeather, futureWeather } = action.payload;
+      const searchTime = new Date().toISOString();
       const historyEntry = {
+        searchTime,
         currentWeather,
         futureWeather,
       };
-      console.log("History entry:", historyEntry);
       state.history.push(historyEntry);
       saveSearchHistoryToStorage(state.history);
+    },
+    clearHistory: (state) => {
+      state.history = [];
+      localStorage.removeItem(SEARCH_HISTORY_KEY);
     },
   },
 });
@@ -47,6 +52,7 @@ export const {
   fetchWeatherSuccess,
   fetchWeatherFailure,
   updateHistory,
+  clearHistory,
 } = weatherSlice.actions;
 
 function loadSearchHistoryFromStorage() {

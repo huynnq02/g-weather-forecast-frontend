@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import formatDate from "../../utils/formatDate";
 import FutureWeatherList from "../../components/card/ListCard";
 import SearchHistory from "../../components/list/SearchHistory";
+import ClearHistoryButton from "../../components/button/ClearHistoryButton";
 function Home() {
   const weatherData = useSelector(
     (state) => state.weather?.data?.data?.current
@@ -22,6 +23,11 @@ function Home() {
   const [data, setData] = useState({});
   const [listData, setListData] = useState({});
 
+  const handleHistoryCardClick = (selectedHistory) => {
+    setData(selectedHistory.currentWeather);
+    setListData(selectedHistory.futureWeather);
+  };
+  
   useEffect(() => {
     if (weatherData && futureData && history) {
       const formattedData = {
@@ -54,7 +60,11 @@ function Home() {
       <div className="home-body">
         <div className="form-container">
           <SearchForm />
-          <SearchHistory history={history} />
+          {history.length > 0 && <ClearHistoryButton />}
+          <SearchHistory
+            history={history}
+            onHistoryCardClick={handleHistoryCardClick}
+          />
         </div>
         <div className="weather-container">
           <CurrentDayWeatherCard {...data} />
