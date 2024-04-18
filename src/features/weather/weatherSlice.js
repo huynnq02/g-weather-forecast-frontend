@@ -1,7 +1,7 @@
 import formatDate from "../../utils/formatDate.js";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const BASE_URL = process.env.BASE_URL
+const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const SEARCH_HISTORY_KEY = "weatherSearchHistory";
 
@@ -68,8 +68,10 @@ function saveSearchHistoryToStorage(history) {
 export const fetchWeather = (cityName) => async (dispatch) => {
   dispatch(fetchWeatherStart());
   try {
+    console.log("Ne");
+    console.log(REACT_APP_BASE_URL);
     const response = await axios.get(
-      `${BASE_URL}weather/?location=${cityName}`
+      `${REACT_APP_BASE_URL}weather/?location=${cityName}`
     );
     const data = response.data;
     dispatch(fetchWeatherSuccess(data));

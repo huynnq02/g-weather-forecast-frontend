@@ -10,12 +10,12 @@ import SearchHistory from "../../components/list/SearchHistory";
 import ClearHistoryButton from "../../components/button/ClearHistoryButton";
 import axios from "axios";
 
-const BASE_URL = process.env.BASE_URL
+const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const subscribeToWeatherUpdates = async (email, location) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}subscription/send-email`,
+      `${REACT_APP_BASE_URL}subscription/send-email`,
       {
         email,
         location,

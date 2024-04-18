@@ -68,7 +68,7 @@ function SearchForm() {
             color={colors.cornflowerBlue}
             height="50px"
             width="370px"
-            onClick={() => handleFormSubmit()}
+            onClick={(event) => handleFormSubmit(event)}
           />
         </div>
         {/* <TextLine text="or" /> */}
