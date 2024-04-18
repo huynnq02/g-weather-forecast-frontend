@@ -8,27 +8,31 @@ import formatDate from "../../utils/formatDate";
 import FutureWeatherList from "../../components/card/ListCard";
 import SearchHistory from "../../components/list/SearchHistory";
 import ClearHistoryButton from "../../components/button/ClearHistoryButton";
+import axios from "axios";
+
+import dotenv from "dotenv";
+dotenv.config();
+const BASE_URL = process.env.BASE_URL
 
 const subscribeToWeatherUpdates = async (email, location) => {
   try {
-    const response = await fetch(
-      "https://g-weather-forecast.onrender.com/api/v1/subscription/send-email",
+    const response = await axios.post(
+      `${BASE_URL}subscription/send-email`,
       {
-        method: "POST",
+        email,
+        location,
+      },
+      {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          location,
-        }),
       }
     );
-    const data = await response.json();
-    if (response.ok) {
+
+    if (response.status === 200) {
       return true;
     } else {
-      throw new Error(data.message);
+      throw new Error(response.data.message);
     }
   } catch (error) {
     console.error("Error subscribing to weather updates:", error);

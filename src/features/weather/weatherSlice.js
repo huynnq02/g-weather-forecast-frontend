@@ -1,6 +1,9 @@
 import formatDate from "../../utils/formatDate.js";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
+const BASE_URL = process.env.BASE_URL
 
 const SEARCH_HISTORY_KEY = "weatherSearchHistory";
 
@@ -68,7 +71,7 @@ export const fetchWeather = (cityName) => async (dispatch) => {
   dispatch(fetchWeatherStart());
   try {
     const response = await axios.get(
-      `https://g-weather-forecast.onrender.com/api/v1/weather/?location=${cityName}`
+      `${BASE_URL}weather/?location=${cityName}`
     );
     const data = response.data;
     dispatch(fetchWeatherSuccess(data));
