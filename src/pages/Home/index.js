@@ -10,8 +10,6 @@ import SearchHistory from "../../components/list/SearchHistory";
 import ClearHistoryButton from "../../components/button/ClearHistoryButton";
 import axios from "axios";
 
-import dotenv from "dotenv";
-dotenv.config();
 const BASE_URL = process.env.BASE_URL
 
 const subscribeToWeatherUpdates = async (email, location) => {

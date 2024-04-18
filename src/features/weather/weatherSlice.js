@@ -1,8 +1,6 @@
 import formatDate from "../../utils/formatDate.js";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
 const BASE_URL = process.env.BASE_URL
 
 const SEARCH_HISTORY_KEY = "weatherSearchHistory";
